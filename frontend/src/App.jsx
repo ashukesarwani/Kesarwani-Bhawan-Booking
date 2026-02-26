@@ -17,10 +17,13 @@ const WHATSAPP_NUMBER = "917380785853";
 const PROPERTY_NAME = "Kesarwani Bhawan's";
 const CITY = "Prayagraj, UP";
 
-const LOCATION_1_NAME = "Kesarwani Bhawan – Civil Lines";
+const LOCATION_1_NAME = "Kesarwani Bhawan – Rajapur";
 const LOCATION_1_MAP = "https://www.google.com/maps?q=Kesarwani+Bhawan+Civil+Lines+Prayagraj";
 const LOCATION_2_NAME = "Kesarwani Bhawan – Near Station";
 const LOCATION_2_MAP = "https://www.google.com/maps?q=Kesarwani+Bhawan+Near+Station+Prayagraj";
+
+const YOUTUBE_URL = "https://www.youtube.com/@Prayagi_Ashutosh";
+const INSTAGRAM_URL = "https://www.instagram.com/the_ashutosh_2.0/";
 
 const ROOMS = [
   { id: 1, name: "Standard Room", price: 999, info: "Best for 1–2 guests" },
@@ -30,6 +33,44 @@ const ROOMS = [
 
 function whatsappLink(message) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+/* ---------- Icons (SVG) ---------- */
+
+function YouTubeIcon({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M21.6 7.2a3.03 3.03 0 0 0-2.13-2.14C17.7 4.5 12 4.5 12 4.5s-5.7 0-7.47.56A3.03 3.03 0 0 0 2.4 7.2 31.8 31.8 0 0 0 2 12a31.8 31.8 0 0 0 .4 4.8 3.03 3.03 0 0 0 2.13 2.14C6.3 19.5 12 19.5 12 19.5s5.7 0 7.47-.56a3.03 3.03 0 0 0 2.13-2.14A31.8 31.8 0 0 0 22 12a31.8 31.8 0 0 0-.4-4.8Z"
+        fill="#FF0000"
+      />
+      <path d="M10 15.5V8.5L16 12l-6 3.5Z" fill="white" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="ig" x1="3" y1="21" x2="21" y2="3" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F9CE34" />
+          <stop offset="0.5" stopColor="#EE2A7B" />
+          <stop offset="1" stopColor="#6228D7" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Z"
+        fill="url(#ig)"
+      />
+      <path
+        d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"
+        fill="white"
+        opacity="0.95"
+      />
+      <path d="M17.4 7.1a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0Z" fill="white" opacity="0.95" />
+    </svg>
+  );
 }
 
 /* ---------- UI Helpers ---------- */
@@ -175,9 +216,7 @@ function Layout({ children }) {
                 </>
               )}
 
-              <Button variant="whatsapp" href={whatsappLink(msg)}>
-                WhatsApp
-              </Button>
+              <Button variant="whatsapp" href={whatsappLink(msg)}>WhatsApp</Button>
             </div>
           </div>
         </Container>
@@ -187,6 +226,61 @@ function Layout({ children }) {
       <Container>
         <div style={{ padding: "22px 0 40px" }}>{children}</div>
       </Container>
+
+      {/* ✅ Floating Social Sidebar */}
+      <div
+        style={{
+          position: "fixed",
+          right: 14,
+          top: "50%",
+          transform: "translateY(-50%)",
+          display: "grid",
+          gap: 10,
+          zIndex: 50,
+        }}
+      >
+        <a
+          href={YOUTUBE_URL}
+          target="_blank"
+          rel="noreferrer"
+          title="YouTube"
+          style={{
+            width: 46,
+            height: 46,
+            borderRadius: 14,
+            display: "grid",
+            placeItems: "center",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.14)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+            textDecoration: "none",
+          }}
+        >
+          <YouTubeIcon size={22} />
+        </a>
+
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noreferrer"
+          title="Instagram"
+          style={{
+            width: 46,
+            height: 46,
+            borderRadius: 14,
+            display: "grid",
+            placeItems: "center",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.14)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+            textDecoration: "none",
+          }}
+        >
+          <InstagramIcon size={22} />
+        </a>
+      </div>
 
       {/* FOOTER */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.10)", background: "rgba(7,12,24,0.60)", backdropFilter: "blur(12px)", padding: "22px 0" }}>
@@ -212,6 +306,94 @@ function Layout({ children }) {
               <a href={LOCATION_2_MAP} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: 8, color: "rgba(232,237,247,0.9)", textDecoration: "none" }}>
                 📍 {LOCATION_2_NAME}
               </a>
+            </div>
+
+            {/* ✅ Social */}
+            <div>
+              <div style={{ fontWeight: 1000, fontSize: 16 }}>Follow & Support</div>
+
+              {/* Animated Subscribe Button */}
+              <a
+                href={YOUTUBE_URL}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 10,
+                  marginTop: 10,
+                  padding: "10px 12px",
+                  borderRadius: 12,
+                  background: "linear-gradient(135deg, #ff0000, #ff4d4d)",
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: 1000,
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  boxShadow: "0 10px 30px rgba(255,0,0,0.25)",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <YouTubeIcon size={20} />
+                  Subscribe on YouTube
+                </span>
+
+                <span
+                  style={{
+                    background: "rgba(255,255,255,0.18)",
+                    padding: "6px 10px",
+                    borderRadius: 999,
+                    fontSize: 12,
+                    fontWeight: 1000,
+                  }}
+                >
+                  🔔
+                </span>
+
+                {/* Shine animation */}
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "-40%",
+                    width: "40%",
+                    height: "100%",
+                    background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)",
+                    transform: "skewX(-20deg)",
+                    animation: "shine 2.4s infinite",
+                  }}
+                />
+              </a>
+
+              {/* Instagram Button */}
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginTop: 10,
+                  padding: "10px 12px",
+                  borderRadius: 12,
+                  background: "linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)",
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: 1000,
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  boxShadow: "0 10px 30px rgba(98,40,215,0.18)",
+                }}
+              >
+                <InstagramIcon size={20} />
+                Follow on Instagram
+              </a>
+
+              <div style={{ marginTop: 10, fontSize: 13, opacity: 0.85 }}>
+                👍 Like • 🔔 Subscribe • 💬 Share
+              </div>
             </div>
           </div>
         </Container>
@@ -291,7 +473,6 @@ function Rooms() {
 function Booking() {
   const user = getUser();
 
-  // protect
   React.useEffect(() => {
     if (!user) window.location.href = "/login";
   }, [user]);

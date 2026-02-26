@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+
+@keyframes shine {
+  0% { left: -40%; }
+  60% { left: 120%; }
+  100% { left: 120%; }
+}

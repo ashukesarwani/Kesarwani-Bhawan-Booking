@@ -2,3 +2,9 @@
 * { box-sizing: border-box; }
 body { margin: 0; }
 input, select, textarea, button { font: inherit; }
+
+@keyframes shine {
+  0% { left: -40%; }
+  60% { left: 120%; }
+  100% { left: 120%; }
+}
