@@ -201,7 +201,7 @@ function Layout({ children }) {
             <div>
               <div style={{ fontWeight: 1000, fontSize: 16 }}>Contact</div>
               <div style={{ opacity: 0.85, marginTop: 6 }}>Phone/WhatsApp: {WHATSAPP_NUMBER}</div>
-              <div style={{ opacity: 0.85, marginTop: 6 }}>Email: yourmail@example.com</div>
+              <div style={{ opacity: 0.85, marginTop: 6 }}>Email: ashukesarwani057@gmail.com</div>
             </div>
 
             <div>
