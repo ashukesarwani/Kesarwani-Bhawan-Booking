@@ -7,6 +7,7 @@ export default function Register() {
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [phone, setPhone] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const [err, setErr] = React.useState("");
@@ -17,15 +18,20 @@ export default function Register() {
 
     const n = name.trim();
     const em = email.trim().toLowerCase();
+    const ph = phone.trim();
     const pw = password;
 
-    // ✅ Hard validation
-    if (!n || !em || !pw) {
+    if (!n || !em || !ph || !pw) {
       setErr("All fields required");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
       setErr("Enter a valid email");
+      return;
+    }
+    // India phone basic check (10+ digits)
+    if (!/^\d{10,15}$/.test(ph.replace(/\s+/g, ""))) {
+      setErr("Enter a valid phone number");
       return;
     }
     if (pw.length < 6) {
@@ -37,9 +43,13 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await apiPost("/auth/register", { name: n, email: em, password: pw });
+      const res = await apiPost("/auth/register", {
+        name: n,
+        email: em,
+        phone: ph,
+        password: pw,
+      });
 
-      // backend may return token/user
       if (res?.token) setToken(res.token);
       if (res?.user) setUser(res.user);
 
@@ -56,28 +66,10 @@ export default function Register() {
       <h2>Register</h2>
 
       <form onSubmit={submit} style={{ display: "grid", gap: 10 }}>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Full name"
-          autoComplete="name"
-        />
-
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          type="email"
-          autoComplete="email"
-        />
-
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password (6+ chars)"
-          type="password"
-          autoComplete="new-password"
-        />
+        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" />
+        <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" type="email" />
+        <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone (WhatsApp)" />
+        <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (6+ chars)" type="password" />
 
         <button type="submit" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
           {loading ? "Creating..." : "Create account"}
