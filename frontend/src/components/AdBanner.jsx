@@ -1,29 +1,17 @@
 import { useEffect } from "react";
 
-type Props = {
-  slot: string;
-  style?: React.CSSProperties;
-  format?: string;
-  responsive?: boolean;
-};
-
-declare global {
-  interface Window {
-    adsbygoogle: any[];
-  }
-}
-
 export default function AdBanner({
   slot,
   style = { display: "block" },
   format = "auto",
   responsive = true,
-}: Props) {
+}) {
   useEffect(() => {
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({});
     } catch (e) {
-      console.log(e);
+      console.log("AdSense error:", e);
     }
   }, []);
 
