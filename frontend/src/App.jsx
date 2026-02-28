@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-do
 
 import { apiPost, getUser, logout as doLogout } from "./api";
 import AvailabilityCalendar from "./components/AvailabilityCalendar";
+import AdBanner from "./components/AdBanner";
 
 import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
@@ -124,7 +125,13 @@ function Button({ children, href, onClick, variant = "primary" }) {
 
   const common = { ...base, ...styles };
 
-  if (href) return <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" style={common}>{children}</a>;
+  if (href)
+    return (
+      <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" style={common}>
+        {children}
+      </a>
+    );
+
   return (
     <button
       onClick={onClick}
@@ -179,7 +186,16 @@ function Layout({ children }) {
       }}
     >
       {/* HEADER */}
-      <div style={{ position: "sticky", top: 0, zIndex: 10, background: "rgba(7,12,24,0.55)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          background: "rgba(7,12,24,0.55)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
         <Container>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 0", gap: 12, flexWrap: "wrap" }}>
             <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "white" }}>
@@ -216,7 +232,9 @@ function Layout({ children }) {
                 </>
               )}
 
-              <Button variant="whatsapp" href={whatsappLink(msg)}>WhatsApp</Button>
+              <Button variant="whatsapp" href={whatsappLink(msg)}>
+                WhatsApp
+              </Button>
             </div>
           </div>
         </Container>
@@ -224,21 +242,16 @@ function Layout({ children }) {
 
       {/* MAIN */}
       <Container>
-        <div style={{ padding: "22px 0 40px" }}>{children}</div>
+        <div style={{ padding: "22px 0 40px", display: "grid", gap: 14 }}>
+          {/* ✅ Ad shows on every page */}
+          <AdBanner slot="8799583335" />
+
+          {children}
+        </div>
       </Container>
 
-      {/* ✅ Floating Social Sidebar */}
-      <div
-        style={{
-          position: "fixed",
-          right: 14,
-          top: "50%",
-          transform: "translateY(-50%)",
-          display: "grid",
-          gap: 10,
-          zIndex: 50,
-        }}
-      >
+      {/* Floating Social Sidebar */}
+      <div style={{ position: "fixed", right: 14, top: "50%", transform: "translateY(-50%)", display: "grid", gap: 10, zIndex: 50 }}>
         <a
           href={YOUTUBE_URL}
           target="_blank"
@@ -289,7 +302,9 @@ function Layout({ children }) {
             <div>
               <div style={{ fontWeight: 1000, fontSize: 16 }}>{PROPERTY_NAME}</div>
               <div style={{ opacity: 0.8, marginTop: 6 }}>{CITY}</div>
-              <div style={{ opacity: 0.8, marginTop: 6 }}>© {new Date().getFullYear()} {PROPERTY_NAME}. All rights reserved.</div>
+              <div style={{ opacity: 0.8, marginTop: 6 }}>
+                © {new Date().getFullYear()} {PROPERTY_NAME}. All rights reserved.
+              </div>
             </div>
 
             <div>
@@ -308,11 +323,8 @@ function Layout({ children }) {
               </a>
             </div>
 
-            {/* ✅ Social */}
             <div>
               <div style={{ fontWeight: 1000, fontSize: 16 }}>Follow & Support</div>
-
-              {/* Animated Subscribe Button */}
               <a
                 href={YOUTUBE_URL}
                 target="_blank"
@@ -331,43 +343,15 @@ function Layout({ children }) {
                   fontWeight: 1000,
                   border: "1px solid rgba(255,255,255,0.15)",
                   boxShadow: "0 10px 30px rgba(255,0,0,0.25)",
-                  position: "relative",
-                  overflow: "hidden",
                 }}
               >
                 <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <YouTubeIcon size={20} />
                   Subscribe on YouTube
                 </span>
-
-                <span
-                  style={{
-                    background: "rgba(255,255,255,0.18)",
-                    padding: "6px 10px",
-                    borderRadius: 999,
-                    fontSize: 12,
-                    fontWeight: 1000,
-                  }}
-                >
-                  🔔
-                </span>
-
-                {/* Shine animation */}
-                <span
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: "-40%",
-                    width: "40%",
-                    height: "100%",
-                    background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)",
-                    transform: "skewX(-20deg)",
-                    animation: "shine 2.4s infinite",
-                  }}
-                />
+                <span style={{ background: "rgba(255,255,255,0.18)", padding: "6px 10px", borderRadius: 999, fontSize: 12, fontWeight: 1000 }}>🔔</span>
               </a>
 
-              {/* Instagram Button */}
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
@@ -391,9 +375,7 @@ function Layout({ children }) {
                 Follow on Instagram
               </a>
 
-              <div style={{ marginTop: 10, fontSize: 13, opacity: 0.85 }}>
-                👍 Like • 🔔 Subscribe • 💬 Share
-              </div>
+              <div style={{ marginTop: 10, fontSize: 13, opacity: 0.85 }}>👍 Like • 🔔 Subscribe • 💬 Share</div>
             </div>
           </div>
         </Container>
@@ -413,25 +395,8 @@ function Home() {
           <div style={{ opacity: 0.85, fontWeight: 700 }}>Comfortable rooms in {CITY}. Booking details save होंगे + admin confirm करेगा.</div>
 
           <div style={{ display: "grid", placeItems: "center", marginTop: 8 }}>
-            <div
-              style={{
-                width: "min(520px, 92vw)",
-                borderRadius: 20,
-                padding: 14,
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.10)",
-              }}
-            >
-              <img
-                src={prayagiImg}
-                alt="Prayagi Ashutosh"
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                  borderRadius: 16,
-                }}
-              />
+            <div style={{ width: "min(520px, 92vw)", borderRadius: 20, padding: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.10)" }}>
+              <img src={prayagiImg} alt="Prayagi Ashutosh" style={{ width: "100%", height: "auto", display: "block", borderRadius: 16 }} />
             </div>
           </div>
 
